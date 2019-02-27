@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="Hugo Black">
+
+
+
+<meta name="description" content="本文详细说明了React组件和基本属性以及组件的生命周期三个状态：Mounting(装载)，Updating (更新)，Unmounting(移除)。">
+<meta name="keywords" content="react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React生命周期">
+<meta property="og:url" content="https://hugo1993.gitee.io/2017/09/18/react-base-knowledge-middle/index.html">
+<meta property="og:site_name" content="Hugo‘s Blog">
+<meta property="og:description" content="本文详细说明了React组件和基本属性以及组件的生命周期三个状态：Mounting(装载)，Updating (更新)，Unmounting(移除)。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hugo1993.gitee.io/resources/post_images/component-lifecycle.jpg">
+<meta property="og:updated_time" content="2019-02-27T14:48:22.406Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React生命周期">
+<meta name="twitter:description" content="本文详细说明了React组件和基本属性以及组件的生命周期三个状态：Mounting(装载)，Updating (更新)，Unmounting(移除)。">
+<meta name="twitter:image" content="https://hugo1993.gitee.io/resources/post_images/component-lifecycle.jpg">
+
+<link rel="apple-touch-icon" href="/favorites/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Hugo‘s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>React生命周期 | Hugo‘s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+
+  <body>
+    <script type="text/javascript" color="0,0,255" opacity='1' zIndex="-1" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+    <div id="container">
+      <div class="left-col">
+        <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Hugo Black</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">不忘初心，方得始终</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="搜索...(◕ܫ◕)" class="search form-control" autocomplete="off" autocorrect="off" searchonload="false">
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class="no-result">No results found <i class="fa fa-spinner fa-pulse"></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/resume">我的简历</a></li>
+                        
+                            <li><a href="/book">我的书籍</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:helloblack2017@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/" title="GitHub"></a>
+                            
+                                <a class="fa StackOverflow" href="https://stackoverflow.com/" title="StackOverflow"></a>
+                            
+                                <a class="fa 简书" href="https://www.jianshu.com/bookmarks" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" href="https://segmentfault.com/" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" href="https://www.oschina.net/" title="CSDN"></a>
+                            
+                                <a class="fa Coding" href="https://coding.net" title="Coding"></a>
+                            
+                                <a class="fa Google" href="https://www.google.com" title="Google"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" href="https://music.163.com/" title="网易云音乐"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Aplayer/">Aplayer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browsersync/">Browsersync</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DPlayer/">DPlayer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Slf4j/">Slf4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/command/">command</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/log4j/">log4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native/">react native</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot/">spring boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tmux/">tmux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">懂一点java web的程序猿。作为一个程序猿，你可以忘了学习过的高数，可以忘了学习过的概率论，可以忘了学习过的线性代数.... 但是千万别忘了学习。</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+      </div>
+      
+        <div class="hide-left-col" title="">
+          <i class="fa fa-angle-double-left"></i>
+        </div>
+        <script type="text/javascript">
+            var hide = false, leftWidth = 320;
+            function hideLeftCol() {
+              if (hide) {
+                $(".left-col").width(leftWidth);
+                $(".left-col .intrude-less").css('display', '');
+                $("#tocButton").css('display', '');
+                ($("#switch-btn").css("display") === "block" && $("#switch-area").css("display") === "block") || $("#toc").slideDown(320);
+                $(".hide-left-col").css("left", leftWidth).html('<i class="fa fa-angle-double-left"></i>');
+                $(".mid-col").css("left", leftWidth);
+                $("#post-nav-button").css("left", leftWidth);
+                $("#post-nav-button > a:nth-child(2)").css("display", "block");
+                $("#live2d-widget").css("display", "block")
+                hide = false;
+              } else {
+                $(".left-col").width(0);
+                $(".left-col .intrude-less").css('display', 'none');
+                $("#toc").css('display', 'none');
+                $("#tocButton").css('display', 'none');
+                $(".hide-left-col").css("left", 0).html('<i class="fa fa-angle-double-right"></i>');
+                $(".mid-col").css("left", 0);
+                $("#post-nav-button").css("left", 0);
+                $("#post-nav-button > a:nth-child(2)").css("display", "none");
+                if ($(".post-list").is(":visible")) {
+                  $("#post-nav-button .fa-bars,#post-nav-button .fa-times").toggle();
+                  $(".post-list").toggle();
+                }
+                $("#live2d-widget").css("display", "none");
+                hide = true;
+              }
+            };
+
+            $(".hide-left-col").click(function() {
+              hideLeftCol()
+            });
+        </script>
+      
+      <div class="mid-col">
+        <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Hugo Black</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Hugo Black</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">不忘初心，方得始终</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/resume">我的简历</a></li>
+                
+                    <li><a href="/book">我的书籍</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:helloblack2017@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/" title="GitHub"></a>
+                            
+                                <a class="fa StackOverflow" target="_blank" href="https://stackoverflow.com/" title="StackOverflow"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="https://www.jianshu.com/bookmarks" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" target="_blank" href="https://segmentfault.com/" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="https://www.oschina.net/" title="CSDN"></a>
+                            
+                                <a class="fa Coding" target="_blank" href="https://coding.net" title="Coding"></a>
+                            
+                                <a class="fa Google" target="_blank" href="https://www.google.com" title="Google"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="https://music.163.com/" title="网易云音乐"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+          <div class="body-wrap">
+            <article id="post-react-base-knowledge-middle" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/18/react-base-knowledge-middle/" class="article-date">
+      <time datetime="2017-09-18T03:27:12.000Z" itemprop="datePublished">2017-09-18</time>
+</a>
+
+
+    </div>
+    
+      <div class="article-inner">
+        
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      React生命周期
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/术业专攻/">术业专攻</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="组件的详细说明"><a href="#组件的详细说明" class="headerlink" title="组件的详细说明"></a>组件的详细说明</h2><p>当通过调用 React.createClass() 来创建组件的时候，每个组件必须提供render方法，并且也可以包含其它的在这里描述的生命周期方法。  </p>
+<h3 id="render"><a href="#render" class="headerlink" title="render"></a>render</h3><p><code>ReactComponent render()</code><br><code>render()</code> 方法是必须的。<br>当该方法被回调的时候，会检测 <code>this.props</code> 和 <code>this.state</code>，并返回一个单子级组件。该子级组件可以是虚拟的本地 DOM 组件（比如 <code>&lt;div /&gt;</code> 或者 <code>React.DOM.div()</code>），也可以是自定义的复合组件。<br>你也可以返回 <code>null</code> 或者 <code>false</code> 来表明不需要渲染任何东西。实际上，React 渲染一个<code>&lt;noscript&gt;</code> 标签来处理当前的差异检查逻辑。当返回 <code>null</code> 或者 <code>false</code> 的时候，<code>this.getDOMNode()</code> 将返回 <code>null</code>。   </p>
+<p><strong>注意：</strong>  </p>
+<p><code>render()</code> 函数应该是纯粹的，也就是说该函数不修改组件的 <code>state</code>，每次调用都返回相同的结果，不读写 DOM 信息，也不和浏览器交互（例如通过使用 <code>setTimeout</code>）。如果需要和浏览器交互，在 <code>componentDidMount()</code> 中或者其它生命周期方法中做这件事。保持 <code>render()</code> 纯粹，可以使服务器端渲染更加切实可行，也使组件更容易被理解。  </p>
+<blockquote>
+<p>心得：不要在<code>render()</code>函数中做复杂的操作，更不要进行网络请求，数据库读写，I/O等操作。</p>
+</blockquote>
+<h3 id="getInitialState"><a href="#getInitialState" class="headerlink" title="getInitialState"></a>getInitialState</h3><p><code>object getInitialState()</code><br>初始化组件状态，在组件挂载之前调用一次。返回值将会作为 <code>this.state</code> 的初始值。  </p>
+<blockquote>
+<p>心得：通常在该方法中对组件的状态进行初始化。  </p>
+</blockquote>
+<h3 id="getDefaultProps"><a href="#getDefaultProps" class="headerlink" title="getDefaultProps"></a>getDefaultProps</h3><p><code>object getDefaultProps()</code><br>设置组件属性的默认值，在组件类创建的时候调用一次，然后返回值被缓存下来。如果父组件没有指定 <code>props</code> 中的某个键，则此处返回的对象中的相应属性将会合并到 <code>this.props</code> （使用 in 检测属性）。<br><strong>Usage:</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">getDefaultProps() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      title: &apos;&apos;,</span><br><span class="line">      popEnabled:true</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong><br>该方法在任何实例创建之前调用，因此不能依赖于 <code>this.props</code>。另外，<code>getDefaultProps()</code> 返回的任何复杂对象将会在实例间共享，而不是每个实例拥有一份拷贝。  </p>
+<blockquote>
+<p>心得：该方法在你封装一个自定义组件的时候经常用到，通常用于为组件初始化默认属性。   </p>
+</blockquote>
+<h3 id="PropTypes"><a href="#PropTypes" class="headerlink" title="PropTypes"></a><a href="https://facebook.github.io/react/docs/top-level-api.html#react.proptypes" target="_blank" rel="noopener">PropTypes</a></h3><p><code>object propTypes</code><br><code>propTypes</code> 对象用于验证传入到组件的 <code>props</code>。  可参考<a href="https://facebook.github.io/react/docs/reusable-components.html" target="_blank" rel="noopener">可重用的组件</a>。</p>
+<p><strong>Usage:</strong>   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var NavigationBar=React.createClass(&#123;</span><br><span class="line">  propTypes: &#123;</span><br><span class="line">    navigator:React.PropTypes.object,</span><br><span class="line">    leftButtonTitle: React.PropTypes.string,</span><br><span class="line">    leftButtonIcon: Image.propTypes.source,</span><br><span class="line">    popEnabled:React.PropTypes.bool,</span><br><span class="line">    onLeftButtonClick: React.PropTypes.func,</span><br><span class="line">    title:React.PropTypes.string,</span><br><span class="line">    rightButtonTitle: React.PropTypes.string,</span><br><span class="line">    rightButtonIcon:Image.propTypes.source,</span><br><span class="line">    onRightButtonClick:React.PropTypes.func</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>心得：在封装组件时，对组件的属性通常会有类型限制，如：组件的背景图片，需要<code>Image.propTypes.source</code>类型，propTypes便可以帮你完成你需要的属性类型的检查。</p>
+</blockquote>
+<h3 id="mixins"><a href="#mixins" class="headerlink" title="mixins"></a>mixins</h3><p><code>array mixins</code><br><code>mixin</code> 数组允许使用混合来在多个组件之间共享行为。更多关于混合的信息，可参考<a href="https://facebook.github.io/react/docs/reusable-components.html#mixins" target="_blank" rel="noopener">Reusable Components</a>。  </p>
+<blockquote>
+<p>心得：由于ES6不再支持mixins，所以不建议在使用mixins，我们可以用另外一种方式来替代mixins，请参考：<a href="">React Native之React速学教程(下)-ES6不再支持Mixins</a>。</p>
+</blockquote>
+<h3 id="statics"><a href="#statics" class="headerlink" title="statics"></a>statics</h3><p><code>object statics</code><br><code>statics</code> 对象允许你定义静态的方法，这些静态的方法可以在组件类上调用。例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var MyComponent = React.createClass(&#123;</span><br><span class="line">  statics: &#123;</span><br><span class="line">    customMethod: function(foo) &#123;</span><br><span class="line">      return foo === 'bar';</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  render: function() &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">MyComponent.customMethod('bar');  // true</span><br></pre></td></tr></table></figure>
+<p>在这个块儿里面定义的方法都是静态的，你可以通过<code>ClassName.funcationName</code>的形式调用它。<br><strong>注意</strong><br>这些方法不能获取组件的 <code>props</code> 和 <code>state</code>。如果你想在静态方法中检查 <code>props</code> 的值，在调用处把 <code>props</code> 作为参数传入到静态方法。</p>
+<h3 id="displayName"><a href="#displayName" class="headerlink" title="displayName"></a>displayName</h3><p><code>string displayName</code><br><code>displayName</code> 字符串用于输出调试信息。JSX 自动设置该值；可参考<a href="https://facebook.github.io/react/docs/jsx-in-depth.html#the-transform" target="_blank" rel="noopener">JSX in Depth</a>。</p>
+<h4 id="isMounted"><a href="#isMounted" class="headerlink" title="isMounted"></a>isMounted</h4><p><code>boolean isMounted()</code>，当组件被渲染到DOM，该方法返回true，否则返回false。该方法通常用于异步任务完成后修改state前的检查，以避免修改一个没有被渲染的组件的state。   </p>
+<blockquote>
+<p>心得：开发中不建议大家isMounted，大家可以使用另外一种更好的方式来避免修改没有被渲染的DOM，请下文的<a href="">isMounted 是个反模式</a>。</p>
+</blockquote>
+<h2 id="组件的生命周期-Component-Lifecycle"><a href="#组件的生命周期-Component-Lifecycle" class="headerlink" title="组件的生命周期(Component Lifecycle)"></a><a href="https://facebook.github.io/react/docs/working-with-the-browser.html#component-lifecycle" target="_blank" rel="noopener">组件的生命周期(Component Lifecycle)</a></h2><p>在iOS中<code>UIViewController</code>提供了<code>(void)viewWillAppear:(BOOL)animated</code>, <code>- (void)viewDidLoad</code>,<code>(void)viewWillDisappear:(BOOL)animated</code>等生命周期方法，在Android中<code>Activity</code>则提供了 <code>onCreate()</code>,<code>onStart()</code>,<code>onResume()</code>    ,<code>onPause()</code>,<code>onStop()</code>,<code>onDestroy()</code>等生命周期方法，这些生命周期方法展示了一个界面从创建到销毁的一生。  </p>
+<p>那么在React 中组件(Component)也是有自己的生命周期方法的。  </p>
+<p><img src="/resources/post_images/component-lifecycle.jpg" title="Component Lifecycle" style="margin:auto 0; display: block;"></p>
+<h3 id="组件的生命周期分成三个状态："><a href="#组件的生命周期分成三个状态：" class="headerlink" title="组件的生命周期分成三个状态："></a>组件的生命周期分成三个状态：</h3><ul>
+<li>Mounting：已插入真实 DOM</li>
+<li>Updating：正在被重新渲染</li>
+<li>Unmounting：已移出真实 DOM</li>
+</ul>
+<blockquote>
+<p>心得：你会发现这些React 中组件(Component)的生命周期方法从写法上和iOS中<code>UIViewController</code>的生命周期方法很像，React 为每个状态都提供了两种处理函数，will 函数在进入状态之前调用，did 函数在进入状态之后调用。  </p>
+</blockquote>
+<h3 id="Mounting-装载"><a href="#Mounting-装载" class="headerlink" title="Mounting(装载)"></a>Mounting(装载)</h3><ul>
+<li><code>getInitialState()</code>: 在组件挂载之前调用一次。返回值将会作为 this.state 的初始值。</li>
+<li><code>componentWillMount()</code>：服务器端和客户端都只调用一次，在初始化渲染执行之前立刻调用。</li>
+<li><code>componentDidMount()</code>：在初始化渲染执行之后立刻调用一次，仅客户端有效（服务器端不会调用）。</li>
+</ul>
+<h3 id="Updating-更新"><a href="#Updating-更新" class="headerlink" title="Updating (更新)"></a>Updating (更新)</h3><ul>
+<li>componentWillReceiveProps(object nextProps) 在组件接收到新的 props 的时候调用。在初始化渲染的时候，该方法不会调用。</li>
+</ul>
+<p>用此函数可以作为 react 在 prop 传入之后， render() 渲染之前更新 state 的机会。老的 props 可以通过 this.props 获取到。在该函数中调用 this.setState() 将不会引起第二次渲染。</p>
+<ul>
+<li>shouldComponentUpdate(object nextProps, object nextState): 在接收到新的 props 或者 state，将要渲染之前调用。</li>
+</ul>
+<p>该方法在初始化渲染的时候不会调用，在使用 forceUpdate 方法的时候也不会。如果确定新的 props 和 state 不会导致组件更新，则此处应该 返回 false。   </p>
+<blockquote>
+<p>心得：重写次方你可以根据实际情况，来灵活的控制组件当 props 和 state 发生变化时是否要重新渲染组件。   </p>
+</blockquote>
+<ul>
+<li>componentWillUpdate(object nextProps, object nextState)：在接收到新的 props 或者 state 之前立刻调用。</li>
+</ul>
+<p>在初始化渲染的时候该方法不会被调用。使用该方法做一些更新之前的准备工作。   </p>
+<blockquote>
+<p>注意：你不能在该方法中使用 this.setState()。如果需要更新 state 来响应某个 prop 的改变，请使用 <code>componentWillReceiveProps</code>。</p>
+</blockquote>
+<ul>
+<li>componentDidUpdate(object prevProps, object prevState): 在组件的更新已经同步到 DOM 中之后立刻被调用。</li>
+</ul>
+<p>该方法不会在初始化渲染的时候调用。使用该方法可以在组件更新之后操作 DOM 元素。</p>
+<h3 id="Unmounting-移除"><a href="#Unmounting-移除" class="headerlink" title="Unmounting(移除)"></a>Unmounting(移除)</h3><ul>
+<li>componentWillUnmount：在组件从 DOM 中移除的时候立刻被调用。</li>
+</ul>
+<p>在该方法中执行任何必要的清理，比如无效的定时器，或者清除在 componentDidMount 中创建的 DOM 元素。</p>
+<h2 id="isMounted是个反模式"><a href="#isMounted是个反模式" class="headerlink" title="isMounted是个反模式"></a>isMounted是个反模式</h2><p>isMounted通常用于避免修改一个已经被卸载的组件的状态，因为调用一个没有被装载的组件的<code>setState()</code>方法，系统会抛出异常警告。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">this</span>.isMounted()) &#123; <span class="comment">//不推荐</span></span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;...&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面做法有点反模式，<code>isMounted()</code>起到作用的时候也就是组件被卸载之后还有异步操作在进行的时候，这就意味着一个被销毁的组件还持有着一些资源的引用，这会导致系统性能降低甚至内存溢出。      </p>
+<p>React 在设计的时候通过<code>setState()</code>被调用时做了一些检查，来帮助开发者发现被卸载的组件还持有一些资源的引用的情况。如何你使用了<code>isMounted()</code>，也就是跳过的React的检查，也就无法发现被卸载的组件还持有资源的问题。       </p>
+<p>既然isMounted()是反模式，那么有没有可替代方案呢？<br>我们可以通过在设置一个变量来表示组件的装载和卸载的状态，当<code>componentDidMount</code>被调用时该变量为true，当<br><code>componentWillUnmount</code>被调用时，该变量为false，这样该变量就可以当<code>isMounted()</code>来使用。但还不够，到目前为止，我们只是通过变量来替代<code>isMounted()</code>，还没有做任何的优化，接下来我们需要在<code>componentWillUnmount</code>被调用时取消所有的异步回调，主动释放所有资源，这样就能避免被卸载的组件还持有资源的引用的情况，从而减少了内存溢出等情况的发生。   </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComponent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    mydatastore.subscribe(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">  componentWillUnmount() &#123;</span><br><span class="line">    mydatastore.unsubscribe(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用可取消的Promise做异步操作。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cancelablePromise = makeCancelable(</span><br><span class="line">  <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">r</span> =&gt;</span> component.setState(&#123;...&#125;&#125;))</span><br><span class="line">);</span><br><span class="line">cancelablePromise</span><br><span class="line">  .promise</span><br><span class="line">  .then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'resolved'</span>))</span><br><span class="line">  .catch(<span class="function">(<span class="params">reason</span>) =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'isCanceled'</span>, reason.isCanceled));</span><br><span class="line">cancelablePromise.cancel(); <span class="comment">// Cancel the promise</span></span><br></pre></td></tr></table></figure>
+<p>可取消的Promise。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> makeCancelable = <span class="function">(<span class="params">promise</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> hasCanceled_ = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">const</span> wrappedPromise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    promise.then(<span class="function">(<span class="params">val</span>) =&gt;</span></span><br><span class="line">      hasCanceled_ ? reject(&#123;<span class="attr">isCanceled</span>: <span class="literal">true</span>&#125;) : resolve(val)</span><br><span class="line">    );</span><br><span class="line">    promise.catch(<span class="function">(<span class="params">error</span>) =&gt;</span></span><br><span class="line">      hasCanceled_ ? reject(&#123;<span class="attr">isCanceled</span>: <span class="literal">true</span>&#125;) : reject(error)</span><br><span class="line">    );</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    promise: wrappedPromise,</span><br><span class="line">    cancel() &#123;</span><br><span class="line">      hasCanceled_ = <span class="literal">true</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="About"><a href="#About" class="headerlink" title="About"></a>About</h2><p>本文出自<a href="https://github.com/crazycodeboy/RNStudyNotes/" target="_blank" rel="noopener">《React Native学习笔记》</a>系列文章。    </p>
+<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
+<li><a href="https://github.com/crazycodeboy/RNStudyNotes" target="_blank" rel="noopener">React Native 学习笔记</a>   </li>
+<li><a href="https://github.com/crazycodeboy/RNStudyNotes/tree/master/React Native布局/React Native布局详细指南/React Native布局详细指南.md" target="_blank" rel="noopener">Reac Native布局详细指南</a>   </li>
+<li><a href="https://github.com/crazycodeboy/RNStudyNotes/blob/master/React%20Native%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%BF%83%E5%BE%97/React%20Native%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%BF%83%E5%BE%97.md" target="_blank" rel="noopener">React Native调试技巧与心得</a></li>
+<li><a href="https://github.com/crazycodeboy/RNStudyNotes/tree/master/React%20Native%E5%8F%91%E5%B8%83APP%E4%B9%8B%E7%AD%BE%E5%90%8D%E6%89%93%E5%8C%85APK" target="_blank" rel="noopener">React Native发布APP之签名打包APK</a>    </li>
+<li><a href="https://github.com/crazycodeboy/RNStudyNotes/tree/master/React%20Native%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2%E3%80%81%E7%83%AD%E6%9B%B4%E6%96%B0-CodePush%E6%9C%80%E6%96%B0%E9%9B%86%E6%88%90%E6%80%BB%E7%BB%93" target="_blank" rel="noopener">React Native应用部署、热更新-CodePush最新集成总结</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/09/18/react-base-knowledge-middle/">React生命周期</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Hugo Black</a></p>
+        <p><span class="post-count">文章字数:</span>2,391</p>
+        <p><span>发布时间:</span>2017-09-18, 11:27:12</p>
+        <p><span>最后更新:</span>2019-02-27, 22:48:22</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/09/18/react-base-knowledge-middle/" title="React生命周期">https://hugo1993.gitee.io/2017/09/18/react-base-knowledge-middle/</a>
+            <!-- <span class="copy-path" data-clipboard-text="原文: https://hugo1993.gitee.io/2017/09/18/react-base-knowledge-middle/　　作者: Hugo Black" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span> -->
+            <span class="copy-path" data-clipboard-text="https://hugo1993.gitee.io/2017/09/18/react-base-knowledge-middle/" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/09/22/react-native布局/">
+                    react native布局浅谈
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/08/31/vim-command-usage/">
+                    vim使用技巧
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#组件的详细说明"><span class="toc-number">1.</span> <span class="toc-text">组件的详细说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#render"><span class="toc-number">1.1.</span> <span class="toc-text">render</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getInitialState"><span class="toc-number">1.2.</span> <span class="toc-text">getInitialState</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getDefaultProps"><span class="toc-number">1.3.</span> <span class="toc-text">getDefaultProps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PropTypes"><span class="toc-number">1.4.</span> <span class="toc-text">PropTypes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mixins"><span class="toc-number">1.5.</span> <span class="toc-text">mixins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#statics"><span class="toc-number">1.6.</span> <span class="toc-text">statics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#displayName"><span class="toc-number">1.7.</span> <span class="toc-text">displayName</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#isMounted"><span class="toc-number">1.7.1.</span> <span class="toc-text">isMounted</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#组件的生命周期-Component-Lifecycle"><span class="toc-number">2.</span> <span class="toc-text">组件的生命周期(Component Lifecycle)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#组件的生命周期分成三个状态："><span class="toc-number">2.1.</span> <span class="toc-text">组件的生命周期分成三个状态：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mounting-装载"><span class="toc-number">2.2.</span> <span class="toc-text">Mounting(装载)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Updating-更新"><span class="toc-number">2.3.</span> <span class="toc-text">Updating (更新)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unmounting-移除"><span class="toc-number">2.4.</span> <span class="toc-text">Unmounting(移除)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#isMounted是个反模式"><span class="toc-number">3.</span> <span class="toc-text">isMounted是个反模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#About"><span class="toc-number">4.</span> <span class="toc-text">About</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐阅读"><span class="toc-number">5.</span> <span class="toc-text">推荐阅读</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-5 i,
+        .toc-level-5 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/09/22/react-native布局/" title="上一篇: react native布局浅谈">
+                <i class="fa fa-arrow-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/08/31/vim-command-usage/" title="下一篇: vim使用技巧">
+                <i class="fa fa-arrow-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/28/ssh-login-linux/">在windows中使用SSH连接VMware Linux虚拟机</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/01/use-pyenv-manage-python/">使用pyenv进行python多版本控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/CentOS-7安装Docker/">CentOS 7安装Docker CE</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/25/idea-dev-hotswap/">IDEA 下实现 Spring Boot 中页面的热加载</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/user-hexo-tag-dplayer/">Hexo使用 hexo-tag-dplayer 播放视频</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/23/user-dplayer/">Hexo使用 Dplayer 播放视频</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/22/use-hexo-tag-aplayer/">Hexo使用 hexo-tag-aplayer 播放音乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/22/use-aplayer/">Hexo 使用 APlayer 播放音乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/common-hexo-commands/">Hexo日常使用技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/16/hexo-browsersync/">Hexo页面自动刷新与移动端调试</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/hexo-generate-google-sitemap/">Hexo建立谷歌站点地图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/02/slf4-integrate-log42/">使用Slf4j集成Log4j2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/02/log4j-base-knowledge/">log4j2基础讲解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/20/oracle-modify-table/">oracle更改表结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/17/jsp自定义标签/">jsp 自定义标签</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/learn-git-daily-command/">git命令日常使用难点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/01/tmux-command-usage/">tmux实用技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/21/idea-problem-and-solution/">IDEA日常开发问题集锦</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/20/record-git-problem-solution/">git日常产生问题记录与解决</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/01/springboot-base-knowledge/">springboot基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/22/react-native布局/">react native布局浅谈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/react-base-knowledge-middle/">React生命周期</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/vim-command-usage/">vim使用技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/iterm2-useful-command/">iTerm2实用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/git-remote-commands/">git远程操作详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/08/git-useful-command-list/">git常用命令操作集合</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/mysql-problems-record/">mysql数据库问题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/brew-command-usage/">brew命令行使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/07/linux-commmn-command/">Linux 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/09/spring-base-knowledge/">spring基础讲解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/java-reflect/">java反射浅谈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/03/svn-base-knowledge/">svn基础使用技巧</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+
+          </div>
+          <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i>
+                2018-2019 Hugo Black
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  
+                Theme 
+                <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="作者: MOxFIVE -- 简而不减 Hexo 双栏博客主题  v3.5">Yelee</a>  <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        <span id="site-visit" title="本站总访问量"> <i class="fa fa-bookmark" aria-hidden="true"></i><span id="busuanzi_value_site_pv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span title="本站总字数统计">
+                         <span><i class="fa fa-map" aria-hidden="true"></i></span>
+                        <span class="post-count"><b>45.3k</b></span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_site_uv" style="display:none">
+                        <span id="site-visit" title="本站访客数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style="display:none">
+                        <span id="page-visit" title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+
+    
+</footer>
+      </div>
+      
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-116996976-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+    </div>
+  <script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"width":94,"height":180,"position":"top","hOffset":-120,"vOffset":0},"mobile":{"show":false,"scale":0.5},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+  </html>

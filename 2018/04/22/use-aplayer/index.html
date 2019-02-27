@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="author" content="Hugo Black">
+
+
+
+<meta name="description" content="APlayer：一款漂亮的HTML5音乐播放器，由于hexo的markdown文件中支持html语法，可以使用原生的APlayer进行嵌套渲染。">
+<meta name="keywords" content="hexo,Aplayer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 使用 APlayer 播放音乐">
+<meta property="og:url" content="https://hugo1993.gitee.io/2018/04/22/use-aplayer/index.html">
+<meta property="og:site_name" content="Hugo‘s Blog">
+<meta property="og:description" content="APlayer：一款漂亮的HTML5音乐播放器，由于hexo的markdown文件中支持html语法，可以使用原生的APlayer进行嵌套渲染。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-27T14:48:22.425Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo 使用 APlayer 播放音乐">
+<meta name="twitter:description" content="APlayer：一款漂亮的HTML5音乐播放器，由于hexo的markdown文件中支持html语法，可以使用原生的APlayer进行嵌套渲染。">
+
+<link rel="apple-touch-icon" href="/favorites/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Hugo‘s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Hexo 使用 APlayer 播放音乐 | Hugo‘s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head></html>
+
+  <body>
+    <script type="text/javascript" color="0,0,255" opacity='1' zIndex="-1" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+    <div id="container">
+      <div class="left-col">
+        <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Hugo Black</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">不忘初心，方得始终</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="搜索...(◕ܫ◕)" class="search form-control" autocomplete="off" autocorrect="off" searchonload="false">
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class="no-result">No results found <i class="fa fa-spinner fa-pulse"></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/resume">我的简历</a></li>
+                        
+                            <li><a href="/book">我的书籍</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:helloblack2017@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/" title="GitHub"></a>
+                            
+                                <a class="fa StackOverflow" href="https://stackoverflow.com/" title="StackOverflow"></a>
+                            
+                                <a class="fa 简书" href="https://www.jianshu.com/bookmarks" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" href="https://segmentfault.com/" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" href="https://www.oschina.net/" title="CSDN"></a>
+                            
+                                <a class="fa Coding" href="https://coding.net" title="Coding"></a>
+                            
+                                <a class="fa Google" href="https://www.google.com" title="Google"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" href="https://music.163.com/" title="网易云音乐"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Aplayer/">Aplayer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browsersync/">Browsersync</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DPlayer/">DPlayer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA/">IDEA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Slf4j/">Slf4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/command/">command</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jsp/">jsp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/log4j/">log4j</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native/">react native</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot/">spring boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tmux/">tmux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tool/">tool</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">懂一点java web的程序猿。作为一个程序猿，你可以忘了学习过的高数，可以忘了学习过的概率论，可以忘了学习过的线性代数.... 但是千万别忘了学习。</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+      </div>
+      
+        <div class="hide-left-col" title="">
+          <i class="fa fa-angle-double-left"></i>
+        </div>
+        <script type="text/javascript">
+            var hide = false, leftWidth = 320;
+            function hideLeftCol() {
+              if (hide) {
+                $(".left-col").width(leftWidth);
+                $(".left-col .intrude-less").css('display', '');
+                $("#tocButton").css('display', '');
+                ($("#switch-btn").css("display") === "block" && $("#switch-area").css("display") === "block") || $("#toc").slideDown(320);
+                $(".hide-left-col").css("left", leftWidth).html('<i class="fa fa-angle-double-left"></i>');
+                $(".mid-col").css("left", leftWidth);
+                $("#post-nav-button").css("left", leftWidth);
+                $("#post-nav-button > a:nth-child(2)").css("display", "block");
+                $("#live2d-widget").css("display", "block")
+                hide = false;
+              } else {
+                $(".left-col").width(0);
+                $(".left-col .intrude-less").css('display', 'none');
+                $("#toc").css('display', 'none');
+                $("#tocButton").css('display', 'none');
+                $(".hide-left-col").css("left", 0).html('<i class="fa fa-angle-double-right"></i>');
+                $(".mid-col").css("left", 0);
+                $("#post-nav-button").css("left", 0);
+                $("#post-nav-button > a:nth-child(2)").css("display", "none");
+                if ($(".post-list").is(":visible")) {
+                  $("#post-nav-button .fa-bars,#post-nav-button .fa-times").toggle();
+                  $(".post-list").toggle();
+                }
+                $("#live2d-widget").css("display", "none");
+                hide = true;
+              }
+            };
+
+            $(".hide-left-col").click(function() {
+              hideLeftCol()
+            });
+        </script>
+      
+      <div class="mid-col">
+        <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Hugo Black</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Hugo Black</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">不忘初心，方得始终</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/resume">我的简历</a></li>
+                
+                    <li><a href="/book">我的书籍</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:helloblack2017@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/" title="GitHub"></a>
+                            
+                                <a class="fa StackOverflow" target="_blank" href="https://stackoverflow.com/" title="StackOverflow"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="https://www.jianshu.com/bookmarks" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" target="_blank" href="https://segmentfault.com/" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="https://www.oschina.net/" title="CSDN"></a>
+                            
+                                <a class="fa Coding" target="_blank" href="https://coding.net" title="Coding"></a>
+                            
+                                <a class="fa Google" target="_blank" href="https://www.google.com" title="Google"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 网易云音乐" target="_blank" href="https://music.163.com/" title="网易云音乐"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
+</nav>
+          <div class="body-wrap">
+            <article id="post-use-aplayer" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/04/22/use-aplayer/" class="article-date">
+      <time datetime="2018-04-22T11:17:21.000Z" itemprop="datePublished">2018-04-22</time>
+</a>
+
+
+    </div>
+    
+      <div class="article-inner">
+        
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hexo 使用 APlayer 播放音乐
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/实践检验/">实践检验</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Aplayer/">Aplayer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <style>
+    #aplayer {
+        width: 50%;
+        margin: 0 auto;
+    }
+    #player {
+        width: 50%;
+        margin: 0 auto;
+    }
+    @media screen and (max-device-width: 400px) {
+        #aplayer {
+            width: 100%;
+        }
+    }
+     @media screen and (max-device-width: 400px) {
+        #player {
+            width: 100%;
+        }
+    }
+</style>
+
+
+<h2 id="使用-Aplayer-效果"><a href="#使用-Aplayer-效果" class="headerlink" title="使用 Aplayer 效果"></a>使用 Aplayer 效果</h2><p><link rel="stylesheet" href="/assets/css/APlayer.min.css"></p>
+<div id="player"></div><br><div id="aplayer"></div>
+
+<script src="/assets/js/APlayer.min.js"></script>
+
+<script>
+const app = new APlayer({
+    container: document.getElementById('player'),
+    audio: [
+        {
+            name: '你还要我怎样',
+            artist: '薛之谦',
+            url: '/resources/music/你还要我怎样.mp3',
+            cover: '/resources/music/你还要我怎样.jpg',
+            theme: '#46718b'
+        }
+    ]
+});
+
+const application = new APlayer({
+    container: document.getElementById('aplayer'),
+    mini: false,
+    autoplay: false,
+    theme: '#FADFA3',
+    loop: 'all',
+    order: 'random',
+    preload: 'auto',
+    volume: 0.7,
+    mutex: true,
+    listFolded: false,
+    listMaxHeight: '150px',
+    lrcType: 0,
+    audio: [
+        {
+            name: '丑八怪',
+            artist: '薛之谦',
+            url: '/resources/music/丑八怪.mp3',
+            cover: '/resources/music/丑八怪.jpg',
+            theme: '#46718b'
+        },
+        {
+            name: '认真的雪',
+            artist: '薛之谦',
+            url: '/resources/music/认真的雪.mp3',
+            cover: '/resources/music/认真的雪.jpg',
+            theme: '#46718b'
+        },
+        {
+            name: '演员',
+            artist: '薛之谦',
+            url: '/resources/music/演员.mp3',
+            cover: '/resources/music/演员.jpg',
+            theme: '#46718b'
+        },
+        {
+            name: '你还要我怎样',
+            artist: '薛之谦',
+            url: '/resources/music/你还要我怎样.mp3',
+            cover: '/resources/music/你还要我怎样.jpg',
+            theme: '#46718b'
+        }
+    ]
+});
+</script>
+
+<h2 id="如何使用？"><a href="#如何使用？" class="headerlink" title="如何使用？"></a>如何使用？</h2><h3 id="设置-div-容器并引css和-js"><a href="#设置-div-容器并引css和-js" class="headerlink" title="设置 div 容器并引css和 js"></a>设置 div 容器并引css和 js</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    #aplayer &#123;</span></span><br><span class="line"><span class="undefined">        width: 50%;</span></span><br><span class="line"><span class="undefined">        margin: 0 auto;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    @media screen and (max-device-width: 400px) &#123;</span></span><br><span class="line"><span class="undefined">        #aplayer &#123;</span></span><br><span class="line"><span class="undefined">            width: 100%;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"/assets/css/APlayer.min.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"aplayer"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/assets/js/APlayer.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="设置单曲"><a href="#设置单曲" class="headerlink" title="设置单曲"></a>设置单曲</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> APlayer(&#123;</span><br><span class="line">    container: <span class="built_in">document</span>.getElementById(<span class="string">'aplayer'</span>),</span><br><span class="line">    audio: [&#123;</span><br><span class="line">        name: <span class="string">'丑八怪'</span>,                          &lt;!-- 歌曲名称--&gt;</span><br><span class="line">        artist: <span class="string">'薛之谦'</span>,                        &lt;!-- 歌曲作者--&gt;</span><br><span class="line">        url: <span class="string">'/resources/music/丑八怪.mp3'</span>,      &lt;!-- 歌曲路径--&gt;</span><br><span class="line">        cover: <span class="string">'/resources/music/认真的雪.jpg'</span>,  &lt;!-- 歌曲封面图片--&gt;</span><br><span class="line">        theme: <span class="string">'#46718b'</span>                        &lt;!-- 选中歌曲的主题--&gt;</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="设置歌曲列表"><a href="#设置歌曲列表" class="headerlink" title="设置歌曲列表"></a>设置歌曲列表</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">const</span> ap = <span class="keyword">new</span> APlayer(&#123;</span><br><span class="line">    container: <span class="built_in">document</span>.getElementById(<span class="string">'aplayer'</span>),</span><br><span class="line">    mini: <span class="literal">false</span>,            &lt;!-- 不启用迷你播放模式 --&gt;</span><br><span class="line">    autoplay: <span class="literal">false</span>,        &lt;!-- 音频不自动播放 --&gt;</span><br><span class="line">    theme: <span class="string">'#FADFA3'</span>,       &lt;!-- 主题色 --&gt;</span><br><span class="line">    loop: <span class="string">'all'</span>,            &lt;!-- 音频循环播放, 可选值: <span class="string">'all'</span>, <span class="string">'one'</span>, <span class="string">'none'</span>--&gt;</span><br><span class="line">    order: <span class="string">'random'</span>,        &lt;!-- 音频循环顺序, 可选值: <span class="string">'list'</span>, <span class="string">'random'</span>--&gt;</span><br><span class="line">    preload: <span class="string">'auto'</span>,        &lt;!-- 预加载，可选值: <span class="string">'none'</span>, <span class="string">'metadata'</span>, <span class="string">'auto'</span>--&gt;</span><br><span class="line">    volume: <span class="number">0.7</span>,            &lt;!-- 默认音量，请注意播放器会记忆用户设置，用户手动设置音量后默认音量即失效--&gt;</span><br><span class="line">    mutex: <span class="literal">true</span>,            &lt;!-- 互斥，阻止多个播放器同时播放，当前播放器播放时暂停其他播放器 --&gt;</span><br><span class="line">    listFolded: <span class="literal">false</span>,      &lt;!-- 列表默认折叠， <span class="literal">false</span>表示不折叠--&gt;</span><br><span class="line">    listMaxHeight: <span class="string">'120px'</span>, &lt;!-- 列表最大高度，超出此高度将有滚动条--&gt;</span><br><span class="line">    lrcType: <span class="number">0</span>,             &lt;!-- 歌词类型，<span class="number">0</span>表示不显示歌词--&gt;</span><br><span class="line">    audio: [</span><br><span class="line">        &#123;</span><br><span class="line">            name: <span class="string">'丑八怪'</span>,                         &lt;!-- 歌曲名称--&gt;</span><br><span class="line">            artist: <span class="string">'薛之谦'</span>,                       &lt;!-- 歌曲作者--&gt;</span><br><span class="line">            url: <span class="string">'/resources/music/丑八怪.mp3'</span>,     &lt;!-- 歌曲路径--&gt;</span><br><span class="line">            cover: <span class="string">'/resources/music/认真的雪.jpg'</span>, &lt;!-- 歌曲封面图片--&gt;</span><br><span class="line">            theme: <span class="string">'#46718b'</span>                       &lt;!-- 选中歌曲的主题--&gt;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            name: <span class="string">'丑八怪'</span>,</span><br><span class="line">            artist: <span class="string">'薛之谦'</span>,</span><br><span class="line">            url: <span class="string">'/resources/music/丑八怪.mp3'</span>,</span><br><span class="line">            cover: <span class="string">'/resources/music/认真的雪.jpg'</span>,</span><br><span class="line">            theme: <span class="string">'#46718b'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            name: <span class="string">'丑八怪'</span>,</span><br><span class="line">            artist: <span class="string">'薛之谦'</span>,</span><br><span class="line">            url: <span class="string">'/resources/music/丑八怪.mp3'</span>,</span><br><span class="line">            cover: <span class="string">'/resources/music/认真的雪.jpg'</span>,</span><br><span class="line">            theme: <span class="string">'#46718b'</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><blockquote>
+<p>🍭 APlayer 官方文档： <a href="https://aplayer.js.org/#/zh-Hans/" target="_blank" rel="noopener">https://aplayer.js.org/#/zh-Hans/</a></p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/04/22/use-aplayer/">Hexo 使用 APlayer 播放音乐</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Hugo Black</a></p>
+        <p><span class="post-count">文章字数:</span>496</p>
+        <p><span>发布时间:</span>2018-04-22, 19:17:21</p>
+        <p><span>最后更新:</span>2019-02-27, 22:48:22</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/04/22/use-aplayer/" title="Hexo 使用 APlayer 播放音乐">https://hugo1993.gitee.io/2018/04/22/use-aplayer/</a>
+            <!-- <span class="copy-path" data-clipboard-text="原文: https://hugo1993.gitee.io/2018/04/22/use-aplayer/　　作者: Hugo Black" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span> -->
+            <span class="copy-path" data-clipboard-text="https://hugo1993.gitee.io/2018/04/22/use-aplayer/" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/04/22/use-hexo-tag-aplayer/">
+                    Hexo使用 hexo-tag-aplayer 播放音乐
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/04/17/common-hexo-commands/">
+                    Hexo日常使用技巧
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-Aplayer-效果"><span class="toc-number">1.</span> <span class="toc-text">使用 Aplayer 效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何使用？"><span class="toc-number">2.</span> <span class="toc-text">如何使用？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#设置-div-容器并引css和-js"><span class="toc-number">2.1.</span> <span class="toc-text">设置 div 容器并引css和 js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置单曲"><span class="toc-number">2.2.</span> <span class="toc-text">设置单曲</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置歌曲列表"><span class="toc-number">2.3.</span> <span class="toc-text">设置歌曲列表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关链接"><span class="toc-number">3.</span> <span class="toc-text">相关链接</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-5 i,
+        .toc-level-5 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/04/22/use-hexo-tag-aplayer/" title="上一篇: Hexo使用 hexo-tag-aplayer 播放音乐">
+                <i class="fa fa-arrow-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/04/17/common-hexo-commands/" title="下一篇: Hexo日常使用技巧">
+                <i class="fa fa-arrow-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/28/ssh-login-linux/">在windows中使用SSH连接VMware Linux虚拟机</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/01/use-pyenv-manage-python/">使用pyenv进行python多版本控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/28/CentOS-7安装Docker/">CentOS 7安装Docker CE</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/25/idea-dev-hotswap/">IDEA 下实现 Spring Boot 中页面的热加载</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/user-hexo-tag-dplayer/">Hexo使用 hexo-tag-dplayer 播放视频</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/23/user-dplayer/">Hexo使用 Dplayer 播放视频</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/22/use-hexo-tag-aplayer/">Hexo使用 hexo-tag-aplayer 播放音乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/22/use-aplayer/">Hexo 使用 APlayer 播放音乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/common-hexo-commands/">Hexo日常使用技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/16/hexo-browsersync/">Hexo页面自动刷新与移动端调试</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/hexo-generate-google-sitemap/">Hexo建立谷歌站点地图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/02/slf4-integrate-log42/">使用Slf4j集成Log4j2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/02/log4j-base-knowledge/">log4j2基础讲解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/20/oracle-modify-table/">oracle更改表结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/17/jsp自定义标签/">jsp 自定义标签</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/07/learn-git-daily-command/">git命令日常使用难点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/01/tmux-command-usage/">tmux实用技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/21/idea-problem-and-solution/">IDEA日常开发问题集锦</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/20/record-git-problem-solution/">git日常产生问题记录与解决</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/01/springboot-base-knowledge/">springboot基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/22/react-native布局/">react native布局浅谈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/react-base-knowledge-middle/">React生命周期</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/vim-command-usage/">vim使用技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/iterm2-useful-command/">iTerm2实用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/git-remote-commands/">git远程操作详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/08/git-useful-command-list/">git常用命令操作集合</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/mysql-problems-record/">mysql数据库问题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/15/brew-command-usage/">brew命令行使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/07/linux-commmn-command/">Linux 常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/09/spring-base-knowledge/">spring基础讲解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/java-reflect/">java反射浅谈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/03/svn-base-knowledge/">svn基础使用技巧</a></li></ul>
+
+
+
+
+    <script>
+        
+            yiliaConfig.fancybox = false;
+        
+    </script>
+
+          </div>
+          <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i>
+                2018-2019 Hugo Black
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  
+                Theme 
+                <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="作者: MOxFIVE -- 简而不减 Hexo 双栏博客主题  v3.5">Yelee</a>  <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        <span id="site-visit" title="本站总访问量"> <i class="fa fa-bookmark" aria-hidden="true"></i><span id="busuanzi_value_site_pv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span title="本站总字数统计">
+                         <span><i class="fa fa-map" aria-hidden="true"></i></span>
+                        <span class="post-count"><b>45.3k</b></span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_site_uv" style="display:none">
+                        <span id="site-visit" title="本站访客数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style="display:none">
+                        <span id="page-visit" title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+
+    
+</footer>
+      </div>
+      
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-116996976-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+    </div>
+  <script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"width":94,"height":180,"position":"top","hOffset":-120,"vOffset":0},"mobile":{"show":false,"scale":0.5},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+  </html>
