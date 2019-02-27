@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hugo1993.gitee.io/2017/11/20/record-git-problem-solution/</loc>
+    
+    <lastmod>2019-02-27T16:24:39.013Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hugo1993.gitee.io/2018/04/10/hexo-generate-google-sitemap/</loc>
+    
+    <lastmod>2019-02-27T15:49:17.903Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hugo1993.gitee.io/tags/index.html</loc>
     
     <lastmod>2019-02-27T14:48:23.415Z</lastmod>
@@ -100,13 +114,6 @@
   </url>
   
   <url>
-    <loc>https://hugo1993.gitee.io/2018/04/10/hexo-generate-google-sitemap/</loc>
-    
-    <lastmod>2019-02-27T14:48:22.420Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://hugo1993.gitee.io/2018/03/02/slf4-integrate-log42/</loc>
     
     <lastmod>2019-02-27T14:48:22.418Z</lastmod>
@@ -149,13 +156,6 @@
   </url>
   
   <url>
-    <loc>https://hugo1993.gitee.io/2017/11/20/record-git-problem-solution/</loc>
-    
-    <lastmod>2019-02-27T14:48:22.410Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://hugo1993.gitee.io/2017/10/01/springboot-base-knowledge/</loc>
     
     <lastmod>2019-02-27T14:48:22.409Z</lastmod>
@@ -170,14 +170,14 @@
   </url>
   
   <url>
-    <loc>https://hugo1993.gitee.io/2017/09/18/react-base-knowledge-middle/</loc>
+    <loc>https://hugo1993.gitee.io/2017/09/22/react-native%E5%B8%83%E5%B1%80/</loc>
     
     <lastmod>2019-02-27T14:48:22.406Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://hugo1993.gitee.io/2017/09/22/react-native%E5%B8%83%E5%B1%80/</loc>
+    <loc>https://hugo1993.gitee.io/2017/09/18/react-base-knowledge-middle/</loc>
     
     <lastmod>2019-02-27T14:48:22.406Z</lastmod>
     
@@ -212,14 +212,14 @@
   </url>
   
   <url>
-    <loc>https://hugo1993.gitee.io/2017/07/15/brew-command-usage/</loc>
+    <loc>https://hugo1993.gitee.io/2017/07/15/mysql-problems-record/</loc>
     
     <lastmod>2019-02-27T14:48:22.397Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://hugo1993.gitee.io/2017/07/15/mysql-problems-record/</loc>
+    <loc>https://hugo1993.gitee.io/2017/07/15/brew-command-usage/</loc>
     
     <lastmod>2019-02-27T14:48:22.397Z</lastmod>
     

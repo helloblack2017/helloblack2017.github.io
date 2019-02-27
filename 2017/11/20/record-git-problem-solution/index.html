@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="本篇简单记录日常使用git过程遇到的一些问题与解决方法；git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
-<meta name="keywords" content="git">
+<meta name="description" content="执行hexo -d命令时，出现警告LF will be replaced by CRLF, 由于换行符的问题，因为Windows和Linux的换行符不一样，而Git默认应该是Linux的。">
+<meta name="keywords" content="git,hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git日常产生问题记录与解决">
 <meta property="og:url" content="https://hugo1993.gitee.io/2017/11/20/record-git-problem-solution/index.html">
 <meta property="og:site_name" content="Hugo‘s Blog">
-<meta property="og:description" content="本篇简单记录日常使用git过程遇到的一些问题与解决方法；git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
+<meta property="og:description" content="执行hexo -d命令时，出现警告LF will be replaced by CRLF, 由于换行符的问题，因为Windows和Linux的换行符不一样，而Git默认应该是Linux的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-27T14:48:22.410Z">
+<meta property="og:updated_time" content="2019-02-27T16:24:39.013Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git日常产生问题记录与解决">
-<meta name="twitter:description" content="本篇简单记录日常使用git过程遇到的一些问题与解决方法；git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理。">
+<meta name="twitter:description" content="执行hexo -d命令时，出现警告LF will be replaced by CRLF, 由于换行符的问题，因为Windows和Linux的换行符不一样，而Git默认应该是Linux的。">
 
 <link rel="apple-touch-icon" href="/favorites/apple-touch-icon.png">
 
@@ -383,7 +383,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -393,7 +393,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="LF-will-be-replaced-by-CRLF"><a href="#LF-will-be-replaced-by-CRLF" class="headerlink" title="LF will be replaced by CRLF"></a>LF will be replaced by CRLF</h2><p><strong>windwow环境产生 warning: LF will be replaced by CRLF，解决方法：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 删除刚刚生成的.git文件</span><br><span class="line">$ rm -rf .git  </span><br><span class="line">$ git config --gobal core.autocrlf false  </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"># 这样系统就不会去进行换行符的转换了,最后重新执行</span><br><span class="line">$ git init  </span><br><span class="line">$ git add .</span><br></pre></td></tr></table></figure></p>
+        <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>执行<code>hexo d</code>时出现以下问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INFO  Deploying: git</span><br><span class="line">INFO  Clearing .deploy_git folder...</span><br><span class="line">INFO  Copying files from public folder...</span><br><span class="line">INFO  Copying files from extend dirs...</span><br><span class="line">warning: LF will be replaced by CRLF in 2017/09/01/hello-First/index.html.</span><br><span class="line">The file will have its original line endings in your working directory.</span><br><span class="line">warning: LF will be replaced by CRLF in 2017/09/01/hello-world/index.html.</span><br><span class="line">The file will have its original line endings in your working directory.</span><br><span class="line">warning: LF will be replaced by CRLF in 2017/09/03/Vue-second/index.html.</span><br></pre></td></tr></table></figure></p>
+<h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><p><code>CR</code> 回车<br><code>LF</code> 换行<br>Windows/Dos CRLF \r\n<br>Linux/Unix LF \n<br>MacOS CR \r</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>打开命令行，进行设置，在Windows下开发，建议设置autocrlf为true。<br>如果文件编码是UTF8并且包含中文文字，那还是把autocrlf设置为false，并且把所有文件转换为Linux编码（即LF\n），开启safecrlf检查。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">一、AutoCRLF</span><br><span class="line">#提交时转换为LF，检出时转换为CRLF</span><br><span class="line">git config --global core.autocrlf true</span><br><span class="line"></span><br><span class="line">#提交时转换为LF，检出时不转换</span><br><span class="line">git config --global core.autocrlf input</span><br><span class="line"></span><br><span class="line">#提交检出均不转换</span><br><span class="line">git config --global core.autocrlf false</span><br><span class="line"></span><br><span class="line">二、SafeCRLF</span><br><span class="line">#拒绝提交包含混合换行符的文件</span><br><span class="line">git config --global core.safecrlf true</span><br><span class="line"></span><br><span class="line">#允许提交包含混合换行符的文件</span><br><span class="line">git config --global core.safecrlf false</span><br><span class="line"></span><br><span class="line">#提交包含混合换行符的文件时给出警告</span><br><span class="line">git config --global core.safecrlf warn</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -404,9 +406,9 @@
     <div class="copyright">
         <p><span>本文标题:</span><a href="/2017/11/20/record-git-problem-solution/">git日常产生问题记录与解决</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hugo Black</a></p>
-        <p><span class="post-count">文章字数:</span>76</p>
+        <p><span class="post-count">文章字数:</span>342</p>
         <p><span>发布时间:</span>2017-11-20, 20:38:35</p>
-        <p><span>最后更新:</span>2019-02-27, 22:48:22</p>
+        <p><span>最后更新:</span>2019-02-28, 00:24:39</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/11/20/record-git-problem-solution/" title="git日常产生问题记录与解决">https://hugo1993.gitee.io/2017/11/20/record-git-problem-solution/</a>
             <!-- <span class="copy-path" data-clipboard-text="原文: https://hugo1993.gitee.io/2017/11/20/record-git-problem-solution/　　作者: Hugo Black" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span> -->
@@ -443,7 +445,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#LF-will-be-replaced-by-CRLF"><span class="toc-number">1.</span> <span class="toc-text">LF will be replaced by CRLF</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题背景"><span class="toc-number">1.</span> <span class="toc-text">问题背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前置知识"><span class="toc-number">2.</span> <span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法"><span class="toc-number">3.</span> <span class="toc-text">解决方法</span></a></li></ol>
         
     </div>
     <style>
@@ -525,7 +527,7 @@
                 
                     <span title="本站总字数统计">
                          <span><i class="fa fa-map" aria-hidden="true"></i></span>
-                        <span class="post-count"><b>45.3k</b></span>
+                        <span class="post-count"><b>45.6k</b></span>
                     </span>
                 
                 
