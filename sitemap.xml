@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hugo1993.gitee.io/2018/05/01/use-pyenv-manage-python/</loc>
+    
+    <lastmod>2019-03-10T16:14:07.218Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hugo1993.gitee.io/2019/03/11/use-node-and-kill/</loc>
     
-    <lastmod>2019-03-10T16:09:32.274Z</lastmod>
+    <lastmod>2019-03-10T16:12:57.393Z</lastmod>
     
   </url>
   
@@ -59,13 +66,6 @@
   
   <url>
     <loc>https://hugo1993.gitee.io/2018/04/28/CentOS-7%E5%AE%89%E8%A3%85Docker/</loc>
-    
-    <lastmod>2019-02-27T14:48:22.431Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hugo1993.gitee.io/2018/05/01/use-pyenv-manage-python/</loc>
     
     <lastmod>2019-02-27T14:48:22.431Z</lastmod>
     
